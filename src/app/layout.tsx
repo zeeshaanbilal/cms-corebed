@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Header } from "@/components/Header";
@@ -10,10 +10,9 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const fraunces = Fraunces({
+const outfit = Outfit({
   variable: "--font-display",
   subsets: ["latin"],
-  axes: ["opsz", "SOFT", "WONK"],
 });
 
 export const metadata: Metadata = {
@@ -29,9 +28,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} antialiased`}
+      className={`${inter.variable} ${outfit.variable} antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         <SmoothScroll>
           <Header />
           <main className="flex-1 flex flex-col">

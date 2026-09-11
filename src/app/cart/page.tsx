@@ -3,7 +3,7 @@
 import { useCartStore } from "@/lib/store";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { X, Minus, Plus, ShieldCheck, Truck } from "lucide-react";
 
 export default function CartPage() {
@@ -16,9 +16,7 @@ export default function CartPage() {
         <p className="text-core-muted-foreground mb-10 max-w-md">
           Looks like you haven't added anything to your cart yet. Discover our premium sleep collection.
         </p>
-        <Button asChild className="bg-core-ink text-white hover:bg-core-ink/90 rounded-sm h-12 px-10 uppercase tracking-widest text-xs font-semibold">
-          <Link href="/shop">Continue Shopping</Link>
-        </Button>
+        <Link href="/shop" className={buttonVariants({ className: "bg-core-ink text-white hover:bg-core-ink/90 rounded-sm h-12 px-10 uppercase tracking-widest text-xs font-semibold" })}>Continue Shopping</Link>
       </div>
     );
   }
@@ -112,9 +110,7 @@ export default function CartPage() {
                 <span className="font-heading text-2xl">${cartTotal.toLocaleString()}</span>
               </div>
 
-              <Button asChild className="w-full bg-core-ink text-white hover:bg-core-ink/90 rounded-sm h-14 uppercase tracking-widest text-xs font-semibold mb-6">
-                <Link href="/checkout">Proceed to Checkout</Link>
-              </Button>
+              <Link href="/checkout" className={buttonVariants({ className: "w-full bg-core-ink text-white hover:bg-core-ink/90 rounded-sm h-14 uppercase tracking-widest text-xs font-semibold mb-6 flex items-center justify-center" })}>Proceed to Checkout</Link>
 
               {/* Trust Badges */}
               <div className="space-y-4">

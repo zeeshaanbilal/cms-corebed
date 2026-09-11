@@ -16,6 +16,8 @@
   --color-core-accent: var(--color-accent);
   --color-core-gold: var(--color-gold);
   --color-core-line: var(--color-line);
+  --color-core-muted: var(--muted);
+  --color-core-muted-foreground: var(--muted-foreground);
 
   /* Map shadcn variables */
   --color-border: var(--border);
@@ -63,13 +65,13 @@
 
 :root {
   /* Design Tokens */
-  --color-bg: #F7F4EF;
-  --color-ink: #1C1B19;
-  --color-accent: #C08552; /* terracotta */
-  --color-gold: #B99B6B;
-  --color-line: #E4DED2;
-  --radius-card: 4px;
-  --shadow-soft: 0 20px 60px -20px rgba(28,27,25,0.15);
+  --color-bg: #FFFFFF;
+  --color-ink: #0F172A;
+  --color-accent: #1E293B; /* Soft black for CTA */
+  --color-gold: #D4AF37;
+  --color-line: #E2E8F0;
+  --radius-card: 8px;
+  --shadow-soft: 0 10px 40px -10px rgba(15,23,42,0.08);
   --ease-house: cubic-bezier(.16,1,.3,1);
 
   /* Shadcn Overrides */
@@ -85,16 +87,16 @@
   --primary: var(--color-ink);
   --primary-foreground: var(--color-bg);
   
-  --secondary: #EBE7DF;
+  --secondary: #F8FAFC;
   --secondary-foreground: var(--color-ink);
   
-  --muted: #EBE7DF;
-  --muted-foreground: #6B6965;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
   
   --accent: var(--color-accent);
   --accent-foreground: #ffffff;
   
-  --destructive: #A33A3A;
+  --destructive: #EF4444;
   
   --border: var(--color-line);
   --input: var(--color-line);
@@ -103,31 +105,31 @@
 
 .dark {
   /* Minimal dark mode support for completion, but the brand is warm neutral */
-  --background: #121110;
-  --foreground: #F7F4EF;
+  --background: #020617;
+  --foreground: #F8FAFC;
   
-  --card: #1C1B19;
-  --card-foreground: #F7F4EF;
+  --card: #0F172A;
+  --card-foreground: #F8FAFC;
   
-  --popover: #1C1B19;
-  --popover-foreground: #F7F4EF;
+  --popover: #0F172A;
+  --popover-foreground: #F8FAFC;
   
-  --primary: #F7F4EF;
-  --primary-foreground: #121110;
+  --primary: #F8FAFC;
+  --primary-foreground: #020617;
   
-  --secondary: #2C2B29;
-  --secondary-foreground: #F7F4EF;
+  --secondary: #1E293B;
+  --secondary-foreground: #F8FAFC;
   
-  --muted: #2C2B29;
-  --muted-foreground: #A19D95;
+  --muted: #1E293B;
+  --muted-foreground: #94A3B8;
   
   --accent: var(--color-accent);
   --accent-foreground: #ffffff;
   
-  --destructive: #C44545;
+  --destructive: #7F1D1D;
   
-  --border: #3A3937;
-  --input: #3A3937;
+  --border: #334155;
+  --input: #334155;
   --ring: var(--color-gold);
 }
 

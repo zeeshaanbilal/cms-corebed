@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Product, Size, Firmness } from "@/lib/data";
 import { useCartStore } from "@/lib/store";
-import { Button } from "@/components/ui/button";
 
 export function ProductForm({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<Size | undefined>(product.sizes[0]);
@@ -22,26 +21,26 @@ export function ProductForm({ product }: { product: Product }) {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Size Selector */}
       {product.sizes.length > 0 && (
-        <div>
-          <div className="flex justify-between items-center mb-3">
-            <span className="font-heading text-lg text-core-ink">Select Size</span>
-            <span className="text-xs text-core-muted-foreground underline cursor-pointer">Size Guide</span>
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <span className="font-heading text-lg tracking-wide text-core-ink uppercase text-sm">Select Size</span>
+            <button className="text-xs font-semibold uppercase tracking-widest text-core-muted-foreground hover:text-core-ink transition-colors border-b border-core-line pb-[2px]">Size Guide</button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {product.sizes.map((size) => (
               <button
                 key={size}
                 onClick={() => setSelectedSize(size)}
-                className={`py-3 px-4 border rounded-sm text-sm font-medium transition-all ${
+                className={`relative py-4 px-4 border rounded-sm text-sm font-medium transition-all duration-300 overflow-hidden ${
                   selectedSize === size 
-                    ? "border-core-ink bg-core-ink text-white" 
-                    : "border-core-line text-core-ink hover:border-core-ink"
+                    ? "border-core-ink text-white shadow-md bg-core-ink" 
+                    : "border-core-line text-core-ink hover:border-core-ink bg-transparent"
                 }`}
               >
-                {size}
+                <span className="relative z-10">{size}</span>
               </button>
             ))}
           </div>
@@ -50,19 +49,19 @@ export function ProductForm({ product }: { product: Product }) {
 
       {/* Firmness Selector */}
       {product.firmness && product.firmness.length > 0 && (
-        <div>
-          <div className="flex justify-between items-center mb-3">
-            <span className="font-heading text-lg text-core-ink">Select Firmness</span>
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <span className="font-heading text-lg tracking-wide text-core-ink uppercase text-sm">Select Firmness</span>
           </div>
           <div className="grid grid-cols-3 gap-3">
             {product.firmness.map((firm) => (
               <button
                 key={firm}
                 onClick={() => setSelectedFirmness(firm)}
-                className={`py-3 px-4 border rounded-sm text-sm font-medium transition-all ${
+                className={`py-4 px-4 border rounded-sm text-sm font-medium transition-all duration-300 ${
                   selectedFirmness === firm 
-                    ? "border-core-ink bg-core-ink text-white" 
-                    : "border-core-line text-core-ink hover:border-core-ink"
+                    ? "border-core-ink text-white shadow-md bg-core-ink" 
+                    : "border-core-line text-core-ink hover:border-core-ink bg-transparent"
                 }`}
               >
                 {firm}
@@ -73,32 +72,35 @@ export function ProductForm({ product }: { product: Product }) {
       )}
 
       {/* Quantity & Add to Cart */}
-      <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-core-line">
-        <div className="flex items-center border border-core-ink rounded-sm sm:w-32 justify-between">
+      <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-core-line">
+        <div className="flex items-center border border-core-line rounded-sm sm:w-32 justify-between bg-white shadow-sm">
           <button 
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
-            className="w-10 h-12 flex items-center justify-center text-core-ink hover:bg-core-muted transition-colors"
+            className="w-12 h-14 flex items-center justify-center text-core-ink hover:bg-core-muted transition-colors text-lg"
           >
             -
           </button>
-          <span className="font-medium">{quantity}</span>
+          <span className="font-medium text-core-ink">{quantity}</span>
           <button 
             onClick={() => setQuantity(quantity + 1)}
-            className="w-10 h-12 flex items-center justify-center text-core-ink hover:bg-core-muted transition-colors"
+            className="w-12 h-14 flex items-center justify-center text-core-ink hover:bg-core-muted transition-colors text-lg"
           >
             +
           </button>
         </div>
         
-        <Button 
+        <button 
           onClick={handleAddToCart}
-          className="flex-1 bg-core-ink text-white hover:bg-core-ink/90 h-12 rounded-sm text-xs font-semibold tracking-widest uppercase"
+          className="flex-1 bg-core-ink text-white hover:bg-core-accent hover:scale-[1.02] transition-all duration-300 shadow-lg h-14 rounded-sm text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-2"
         >
-          Add to Cart - ${(product.price * quantity).toLocaleString()}
-        </Button>
+          Add to Cart <span className="opacity-50">|</span> ${(product.price * quantity).toLocaleString()}
+        </button>
       </div>
       
-      <div className="text-center sm:text-left text-xs text-core-muted-foreground pt-2">
+      <div className="flex items-center justify-center sm:justify-start gap-2 text-xs uppercase tracking-widest text-core-muted-foreground pt-4 font-semibold">
+        <svg className="w-4 h-4 text-core-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+        </svg>
         Ships free in 2-4 business days.
       </div>
 

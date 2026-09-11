@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/lib/data";
 import { useCartStore, useShopStore } from "@/lib/store";
-import { Heart } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import gsap from "gsap";
 import { useRef } from "react";
 
@@ -35,56 +35,85 @@ export function ProductCard({ product, className = "" }: { product: Product; cla
     });
   };
 
+  // Determine badges
+  const isSale = product.compareAtPrice && product.price < product.compareAtPrice;
+  const isBestseller = product.rating >= 4.8;
+
   return (
-    <Link 
-      href={`/product/${product.slug}`} 
-      className={`group block relative ${className}`}
+    <div 
+      className={`group flex flex-col bg-white rounded-2xl overflow-hidden border border-[#F3F4F6] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 ${className}`}
       onMouseEnter={() => handleHover(true)}
       onMouseLeave={() => handleHover(false)}
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-core-muted mb-6 rounded-sm">
+      <Link href={`/product/${product.slug}`} className="relative aspect-[4/5] overflow-hidden bg-[#F8FAFC]">
+        {/* Badges */}
+        <div className="absolute top-3 left-3 z-20 flex flex-col gap-2">
+          {isSale && (
+            <span className="bg-[#EF4444] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-sm shadow-sm">
+              Sale
+            </span>
+          )}
+          {isBestseller && !isSale && (
+            <span className="bg-[#D4AF37] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-sm shadow-sm">
+              Bestseller
+            </span>
+          )}
+        </div>
+
+        {/* Wishlist */}
+        <button 
+          onClick={(e) => { e.preventDefault(); toggleWishlist(product.id); }}
+          className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-md rounded-full shadow-sm z-20 hover:bg-white transition-all duration-200"
+        >
+          <Heart strokeWidth={1.5} className={`w-4 h-4 ${isWishlisted ? "fill-[#EF4444] text-[#EF4444]" : "text-core-muted-foreground hover:text-core-ink"}`} />
+        </button>
+
         <Image
           ref={imageRef}
           src={product.images[0]}
           alt={product.name}
           fill
           className="object-cover"
-          sizes="(max-width: 768px) 50vw, 25vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        
-        {/* Wishlist Button */}
-        <button 
-          onClick={(e) => { e.preventDefault(); toggleWishlist(product.id); }}
-          className="absolute top-4 right-4 p-2 bg-white/50 backdrop-blur-md rounded-full hover:bg-white transition-colors z-10"
-        >
-          <Heart className={`w-4 h-4 ${isWishlisted ? "fill-core-accent text-core-accent" : "text-core-ink"}`} />
-        </button>
+      </Link>
 
-        {/* Quick Add Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[var(--ease-house)]">
-          <button 
-            onClick={handleQuickAdd}
-            className="w-full bg-white text-core-ink py-3 text-xs font-semibold uppercase tracking-widest rounded-sm hover:bg-core-ink hover:text-white transition-colors"
-          >
-            Quick Add
-          </button>
+      <div className="flex flex-col flex-grow p-5">
+        {/* Rating */}
+        <div className="flex items-center gap-1 mb-2">
+          <div className="flex text-[#D4AF37]">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star key={star} className={`w-3.5 h-3.5 ${star <= Math.round(product.rating) ? "fill-current" : "fill-transparent text-[#E2E8F0]"}`} />
+            ))}
+          </div>
+          <span className="text-[11px] text-core-muted-foreground font-medium ml-1">({product.reviewCount})</span>
         </div>
-      </div>
 
-      <div>
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="font-heading text-lg text-core-ink">{product.name}</h3>
-          <div className="text-right">
+        <Link href={`/product/${product.slug}`} className="font-heading text-lg text-core-ink hover:text-[#D4AF37] transition-colors mb-1 line-clamp-1">
+          {product.name}
+        </Link>
+        <p className="text-core-muted-foreground text-sm font-light mb-4 line-clamp-2 min-h-[40px]">
+          {product.description}
+        </p>
+        
+        <div className="mt-auto flex items-center justify-between">
+          <div className="flex flex-col">
             {product.compareAtPrice && (
-              <span className="text-core-muted-foreground line-through text-xs mr-2">
+              <span className="text-core-muted-foreground line-through text-xs mb-0.5">
                 ${product.compareAtPrice.toLocaleString()}
               </span>
             )}
-            <span className="text-core-ink text-sm">${product.price.toLocaleString()}</span>
+            <span className="text-core-ink font-bold text-lg leading-none">${product.price.toLocaleString()}</span>
           </div>
+          
+          <button 
+            onClick={(e) => { e.preventDefault(); handleQuickAdd(e); }}
+            className="bg-core-ink text-white px-4 py-2.5 rounded-lg text-xs font-bold tracking-wide hover:bg-[#D4AF37] shadow-sm hover:shadow-md transition-all duration-300 active:scale-95"
+          >
+            Add to Cart
+          </button>
         </div>
-        <p className="text-core-muted-foreground text-sm line-clamp-1">{product.description}</p>
       </div>
-    </Link>
+    </div>
   );
 }

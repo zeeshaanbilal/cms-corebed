@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui
 import { ShoppingCart, X, Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export function CartDrawer() {
   const { items, cartDrawerOpen, setCartDrawerOpen, cartTotal, updateQuantity, removeItem } = useCartStore();
@@ -95,13 +95,9 @@ export function CartDrawer() {
               <span className="font-heading text-xl text-core-ink">${cartTotal.toLocaleString()}</span>
             </div>
             <p className="text-xs text-core-muted-foreground mb-6">Shipping & taxes calculated at checkout.</p>
-            <Button 
-              asChild 
-              className="w-full bg-core-ink text-white hover:bg-core-ink/90 rounded-sm h-12 uppercase tracking-widest text-xs font-semibold"
-              onClick={() => setCartDrawerOpen(false)}
-            >
-              <Link href="/checkout">Checkout</Link>
-            </Button>
+            <Link href="/checkout" onClick={() => setCartDrawerOpen(false)} className={buttonVariants({ className: "w-full bg-core-ink text-white hover:bg-core-ink/90 rounded-sm h-12 uppercase tracking-widest text-xs font-semibold flex items-center justify-center" })}>
+              Checkout
+            </Link>
           </div>
         )}
       </SheetContent>

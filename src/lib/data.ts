@@ -66,8 +66,8 @@ export const products: Product[] = [
     rating: 4.7,
     reviewCount: 890,
     images: [
-      "https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1629949009765-433ea4104bb0?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800",
     ],
     materials: ["Shredded Memory Foam", "Bamboo Rayon Cover"],
     sizes: ["Standard", "King"],
@@ -84,8 +84,8 @@ export const products: Product[] = [
     rating: 4.9,
     reviewCount: 420,
     images: [
-      "https://images.unsplash.com/photo-1580828369974-9f86053331b6?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1536882240095-0379873feb4e?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800",
     ],
     materials: ["Glass Microbeads", "Organic Cotton Shell"],
     sizes: ["Standard"],

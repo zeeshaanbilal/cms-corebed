@@ -36,14 +36,55 @@ export function CheckoutForm() {
     resolver: zodResolver(checkoutSchema),
   });
 
-  const onSubmit = (data: CheckoutFormValues) => {
+  const onSubmit = async (data: CheckoutFormValues) => {
     setIsSubmitting(true);
-    // Simulate network request
-    setTimeout(() => {
+    
+    // Get cart items from local store (assuming useCartStore exposes items)
+    const cartItems = useCartStore.getState().items;
+    
+    if (cartItems.length === 0) {
+      alert("Your cart is empty.");
       setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contactInfo: { email: data.email },
+          shippingInfo: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            address: data.address,
+            city: data.city,
+            state: data.state,
+            zipCode: data.zipCode,
+          },
+          cartItems, // Passes the full cart array to the API
+        }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        console.error("Checkout Failed:", err);
+        alert("Failed to process order. Check console for details.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Success!
       clearCart();
       router.push("/order-confirmation");
-    }, 1500);
+      
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("An unexpected error occurred.");
+      setIsSubmitting(false);
+    }
   };
 
   return (

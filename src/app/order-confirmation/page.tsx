@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 
 export default function OrderConfirmationPage() {
@@ -22,9 +22,7 @@ export default function OrderConfirmationPage() {
         </p>
       </div>
 
-      <Button asChild className="bg-core-ink text-white hover:bg-core-ink/90 rounded-sm h-12 px-10 uppercase tracking-widest text-xs font-semibold">
-        <Link href="/shop">Continue Shopping</Link>
-      </Button>
+      <Link href="/shop" className={buttonVariants({ className: "bg-core-ink text-white hover:bg-core-ink/90 rounded-sm h-12 px-10 uppercase tracking-widest text-xs font-semibold" })}>Continue Shopping</Link>
     </div>
   );
 }
