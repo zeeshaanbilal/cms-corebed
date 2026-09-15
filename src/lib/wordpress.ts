@@ -101,9 +101,21 @@ export async function getProducts(): Promise<Product[]> {
         : "Bedding";
         
       // Extract images
-      const images = wc.images && wc.images.length > 0 
-        ? wc.images.map((img: any) => img.src)
-        : ["https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800"]; // Fallback image
+      let images: string[] = [];
+      if (wc.images && wc.images.length > 0) {
+        images = wc.images.map((img: any) => img.src);
+      } else if (wc.meta_data) {
+        // Check for dropshipping/Hostinger custom image meta
+        const hostingerImage = wc.meta_data.find((m: any) => m.key === 'hostinger_preview_image_url');
+        if (hostingerImage && hostingerImage.value) {
+          images = [hostingerImage.value];
+        }
+      }
+      
+      // Fallback image if still empty
+      if (images.length === 0) {
+        images = ["https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800"];
+      }
 
       // Extract raw description or use short description
       const desc = wc.short_description 
