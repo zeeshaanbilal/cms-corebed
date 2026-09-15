@@ -11,8 +11,8 @@ export default async function Home() {
   // Fetch real products from WordPress
   const products = await getProducts();
   
-  // Show up to 8 products on the homepage
-  const bestsellers = products.slice(0, 8);
+  // Show only 4 products on the homepage for a clean look
+  const bestsellers = products.slice(0, 4);
 
   return (
     <div className="bg-[#F8FAFC]">
