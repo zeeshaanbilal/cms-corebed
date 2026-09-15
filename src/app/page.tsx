@@ -1,13 +1,17 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { products } from "@/lib/data";
+import { getProducts } from "@/lib/wordpress";
 import { ProductCard } from "@/components/ProductCard";
 import { Shield, Truck, Moon, ArrowRight } from "lucide-react";
 import { NewsletterBand } from "@/components/NewsletterBand";
 
-export default function Home() {
+export default async function Home() {
+  // Fetch real products from WordPress
+  const products = await getProducts();
+  
+  // If no real products yet, we can show a message or just empty grid
+  const bestsellers = products.slice(0, 4);
+
   return (
     <div className="bg-[#F8FAFC]">
       {/* 1. PREMIUM HERO (Standard E-commerce Style) */}
@@ -134,11 +138,17 @@ export default function Home() {
           </div>
           
           {/* Simple Standard Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.slice(0, 4).map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {bestsellers.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {bestsellers.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-10 bg-gray-50 rounded-lg">
+              <p className="text-core-muted-foreground">No products available at the moment.</p>
+            </div>
+          )}
         </div>
       </section>
 
