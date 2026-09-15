@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cms.corebed.com',
       },
+      {
+        protocol: 'https',
+        hostname: 's.alicdn.com',
+      },
     ],
   },
 };
