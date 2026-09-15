@@ -83,7 +83,7 @@ export async function getProducts(): Promise<Product[]> {
         Authorization: authHeader,
         "Content-Type": "application/json",
       },
-      next: { revalidate: 60 }, // ISR Revalidation set to 60 seconds
+      cache: "no-store", // Completely disable caching so new products appear instantly
     });
 
     if (!res.ok) {
