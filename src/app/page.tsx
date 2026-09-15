@@ -11,8 +11,8 @@ export default async function Home() {
   // Fetch real products from WordPress
   const products = await getProducts();
   
-  // If no real products yet, we can show a message or just empty grid
-  const bestsellers = products.slice(0, 4);
+  // Show up to 8 products on the homepage
+  const bestsellers = products.slice(0, 8);
 
   return (
     <div className="bg-[#F8FAFC]">
