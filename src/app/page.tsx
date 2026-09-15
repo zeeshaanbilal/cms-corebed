@@ -5,6 +5,8 @@ import { ProductCard } from "@/components/ProductCard";
 import { Shield, Truck, Moon, ArrowRight } from "lucide-react";
 import { NewsletterBand } from "@/components/NewsletterBand";
 
+export const revalidate = 0; // Always fetch live data
+
 export default async function Home() {
   // Fetch real products from WordPress
   const products = await getProducts();
