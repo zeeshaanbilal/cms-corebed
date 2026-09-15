@@ -54,8 +54,8 @@ export function ShopClient({ products, categoryParam }: ShopClientProps) {
       result = result.filter(p => p.firmness?.some(f => activeFilters.firmness.includes(f)));
     }
 
-    // Price
-    result = result.filter(p => p.price >= activeFilters.priceRange[0] && p.price <= activeFilters.priceRange[1]);
+    // Price (Temporarily disabled to ignore local storage bugs)
+    // result = result.filter(p => p.price >= activeFilters.priceRange[0] && p.price <= activeFilters.priceRange[1]);
 
     // Sort
     switch (sortBy) {
