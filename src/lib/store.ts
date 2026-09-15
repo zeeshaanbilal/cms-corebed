@@ -94,7 +94,7 @@ export const useShopStore = create<ShopState>()(
         categories: [],
         sizes: [],
         firmness: [],
-        priceRange: [0, 3000],
+        priceRange: [0, 10000],
       },
       setFilter: (type, value) => {
         set({
@@ -109,7 +109,7 @@ export const useShopStore = create<ShopState>()(
           categories: [],
           sizes: [],
           firmness: [],
-          priceRange: [0, 3000],
+          priceRange: [0, 10000],
         }
       })
     }),

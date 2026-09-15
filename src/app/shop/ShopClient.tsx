@@ -118,9 +118,9 @@ export function ShopClient({ products, categoryParam }: ShopClientProps) {
       <div>
         <h4 className="font-heading text-lg mb-6 text-core-ink">Price Range</h4>
         <Slider 
-          defaultValue={[0, 3000]}
+          defaultValue={[0, 10000]}
           value={activeFilters.priceRange}
-          max={3000}
+          max={10000}
           step={50}
           onValueChange={(val) => setFilter("priceRange", val as [number, number])}
           className="mb-6 [&_.relative]:bg-[#D4AF37]"
