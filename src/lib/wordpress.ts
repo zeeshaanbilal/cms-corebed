@@ -96,9 +96,21 @@ export async function getProducts(): Promise<Product[]> {
     // Map WooCommerce response to our internal Product interface
     return wcProducts.map((wc: any): Product => {
       // Extract main category or fallback
-      const catName = wc.categories && wc.categories.length > 0 
+      let catName = wc.categories && wc.categories.length > 0 
         ? wc.categories[0].name 
-        : "Bedding";
+        : "Mattresses";
+        
+      // If category is "Uncategorized", try to guess from the name
+      if (catName === "Uncategorized") {
+        const lowerName = wc.name.toLowerCase();
+        if (lowerName.includes("pillow")) {
+          catName = "Pillows";
+        } else if (lowerName.includes("bed") || lowerName.includes("sheet")) {
+          catName = "Bedding";
+        } else {
+          catName = "Mattresses"; // Default fallback for their store
+        }
+      }
         
       // Extract images
       let images: string[] = [];
