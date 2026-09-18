@@ -147,6 +147,38 @@ export async function getProducts(): Promise<Product[]> {
         ? wc.short_description.replace(/(<([^>]+)>)/gi, "") // strip HTML tags
         : (wc.description ? wc.description.replace(/(<([^>]+)>)/gi, "") : "Premium quality product from Corebed.");
 
+      // Extract attributes dynamically from WooCommerce
+      let sizes = ["Standard"];
+      let firmness: string[] = [];
+      let materials = ["Premium Materials"];
+      let features = ["High Quality", "Durable"];
+
+      if (wc.attributes && wc.attributes.length > 0) {
+        // Extract Size
+        const sizeAttr = wc.attributes.find((a: any) => a.name.toLowerCase() === 'size');
+        if (sizeAttr && sizeAttr.options && sizeAttr.options.length > 0) {
+          sizes = sizeAttr.options;
+        }
+
+        // Extract Firmness
+        const firmAttr = wc.attributes.find((a: any) => a.name.toLowerCase() === 'firmness');
+        if (firmAttr && firmAttr.options && firmAttr.options.length > 0) {
+          firmness = firmAttr.options;
+        }
+
+        // Extract Materials
+        const matAttr = wc.attributes.find((a: any) => a.name.toLowerCase() === 'materials' || a.name.toLowerCase() === 'material');
+        if (matAttr && matAttr.options && matAttr.options.length > 0) {
+          materials = matAttr.options;
+        }
+
+        // Extract Features
+        const featAttr = wc.attributes.find((a: any) => a.name.toLowerCase() === 'features' || a.name.toLowerCase() === 'feature' || a.name.toLowerCase() === 'key features');
+        if (featAttr && featAttr.options && featAttr.options.length > 0) {
+          features = featAttr.options;
+        }
+      }
+
       return {
         id: wc.id.toString(),
         slug: wc.slug,
@@ -159,9 +191,10 @@ export async function getProducts(): Promise<Product[]> {
         rating: parseFloat(wc.average_rating || "5.0"),
         reviewCount: wc.rating_count || 0,
         images,
-        materials: ["Premium Materials"], // Default/fallback for UI
-        sizes: ["Standard"], // Default/fallback for UI
-        features: ["High Quality", "Durable"], // Default/fallback for UI
+        materials,
+        sizes: sizes as any, // Cast as any because Size type might be too restrictive in data.ts
+        firmness: firmness.length > 0 ? (firmness as any) : undefined,
+        features,
       };
     });
 
