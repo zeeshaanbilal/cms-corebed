@@ -7,6 +7,7 @@ export interface Product {
   slug: string;
   name: string;
   description: string;
+  htmlDescription?: string;
   category: Category;
   price: number;
   compareAtPrice?: number;

@@ -80,9 +80,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
             </div>
 
-            <p className="text-core-muted-foreground text-lg leading-relaxed mb-12">
-              {product.description}
-            </p>
+            {product.htmlDescription ? (
+              <div 
+                className="text-core-muted-foreground text-lg leading-relaxed mb-12 prose max-w-none [&>img]:w-full [&>img]:rounded-sm [&>img]:my-6 [&>p]:mb-4"
+                dangerouslySetInnerHTML={{ __html: product.htmlDescription }}
+              />
+            ) : (
+              <p className="text-core-muted-foreground text-lg leading-relaxed mb-12">
+                {product.description}
+              </p>
+            )}
 
             <ProductForm product={product} />
 

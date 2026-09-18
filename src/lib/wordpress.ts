@@ -152,6 +152,7 @@ export async function getProducts(): Promise<Product[]> {
         slug: wc.slug,
         name: wc.name,
         description: desc,
+        htmlDescription: wc.description || "", // Keep the raw HTML so images show up
         category: catName as Category,
         price: parseFloat(wc.price || "0"),
         compareAtPrice: wc.regular_price && wc.sale_price ? parseFloat(wc.regular_price) : undefined,
