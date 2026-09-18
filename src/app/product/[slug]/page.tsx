@@ -122,6 +122,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 </AccordionItem>
               </Accordion>
             </div>
+            </div> {/* <-- Added missing closing div here */}
           </div>
         </div>
       </div>
