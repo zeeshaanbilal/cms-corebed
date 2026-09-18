@@ -42,15 +42,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <ProductGallery images={product.images} productName={product.name} />
             
             {/* Long Description (Images) placed below gallery */}
-            {product.htmlDescription ? (
+            {product.htmlDescription && (
               <div 
                 className="mt-16 text-core-muted-foreground text-lg leading-relaxed prose max-w-none [&>img]:w-full [&>img]:rounded-sm [&>img]:my-6 [&>p]:mb-4"
                 dangerouslySetInnerHTML={{ __html: product.htmlDescription }}
               />
-            ) : (
-              <p className="mt-16 text-core-muted-foreground text-lg leading-relaxed">
-                {product.description}
-              </p>
             )}
           </div>
 
@@ -82,7 +78,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <span className="text-sm font-medium text-core-ink underline underline-offset-4 decoration-core-line hover:decoration-core-ink transition-colors cursor-pointer">{product.rating} ({product.reviewCount} Reviews)</span>
               </div>
 
-              <div className="flex items-end gap-4 mb-10 pb-10 border-b border-core-line">
+              <div className="flex items-end gap-4 mb-8 pb-8 border-b border-core-line">
                 <span className="text-3xl text-core-ink font-medium">${product.price.toLocaleString()}</span>
                 {product.compareAtPrice && (
                   <span className="text-xl text-core-muted-foreground line-through mb-[2px]">
@@ -90,6 +86,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   </span>
                 )}
               </div>
+              
+              {/* Short Description */}
+              <p className="text-core-muted-foreground text-lg leading-relaxed mb-10">
+                {product.description}
+              </p>
 
               <ProductForm product={product} />
 

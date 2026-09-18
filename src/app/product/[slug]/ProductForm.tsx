@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Product, Size, Firmness } from "@/lib/data";
 import { useCartStore } from "@/lib/store";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 export function ProductForm({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<Size | undefined>(product.sizes[0]);
@@ -27,7 +28,32 @@ export function ProductForm({ product }: { product: Product }) {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <span className="font-heading text-lg tracking-wide text-core-ink uppercase text-sm">Select Size</span>
-            <button className="text-xs font-semibold uppercase tracking-widest text-core-muted-foreground hover:text-core-ink transition-colors border-b border-core-line pb-[2px]">Size Guide</button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <button className="text-xs font-semibold uppercase tracking-widest text-core-muted-foreground hover:text-core-ink transition-colors border-b border-core-line pb-[2px]">Size Guide</button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-full sm:max-w-lg bg-white border-l border-[#F3F4F6] p-10 overflow-y-auto">
+                <SheetHeader className="mb-12 text-left">
+                  <SheetTitle className="font-heading text-4xl text-core-ink">Size Guide</SheetTitle>
+                </SheetHeader>
+                <div className="space-y-8 text-core-muted-foreground">
+                  <div>
+                    <h3 className="text-core-ink font-bold mb-2">Standard US Mattress Sizes</h3>
+                    <ul className="space-y-3">
+                      <li className="flex justify-between border-b pb-2"><span>Twin</span> <span>38" x 75" (97 x 191 cm)</span></li>
+                      <li className="flex justify-between border-b pb-2"><span>Full</span> <span>54" x 75" (137 x 191 cm)</span></li>
+                      <li className="flex justify-between border-b pb-2"><span>Queen</span> <span>60" x 80" (152 x 203 cm)</span></li>
+                      <li className="flex justify-between border-b pb-2"><span>King</span> <span>76" x 80" (193 x 203 cm)</span></li>
+                      <li className="flex justify-between border-b pb-2"><span>California King</span> <span>72" x 84" (183 x 213 cm)</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-core-ink font-bold mb-2">How to measure</h3>
+                    <p className="text-sm">Please ensure you have accurately measured your bed frame before purchasing. Custom hotel sizes are available upon request for B2B orders.</p>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {product.sizes.map((size) => (
