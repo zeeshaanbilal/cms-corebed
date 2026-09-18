@@ -37,61 +37,61 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div className="max-w-[1440px] mx-auto px-6 py-12 md:py-24">
         <div className="flex flex-col md:flex-row gap-16 lg:gap-32">
           
-          {/* Left: Sticky Image Gallery */}
+          {/* Left: Image Gallery & Long Description */}
           <div className="w-full md:w-[55%]">
-            <div className="md:sticky md:top-32">
-              <ProductGallery images={product.images} productName={product.name} />
-            </div>
-          </div>
-
-          {/* Right: Product Details & Form (Scrolls) */}
-          <div className="w-full md:w-[45%] md:py-10">
-            {/* Breadcrumb / Category */}
-            <div className="flex items-center gap-2 mb-6">
-              <p className="text-xs font-semibold uppercase tracking-widest text-core-muted-foreground hover:text-core-ink transition-colors cursor-pointer">
-                {product.category}
-              </p>
-              <span className="text-core-muted-foreground/50 text-xs">/</span>
-              <p className="text-xs font-semibold uppercase tracking-widest text-core-ink">
-                {product.name}
-              </p>
-            </div>
+            <ProductGallery images={product.images} productName={product.name} />
             
-            <h1 className="font-heading text-5xl lg:text-6xl text-core-ink mb-6 tracking-tight leading-tight">{product.name}</h1>
-            
-            <div className="flex items-center gap-4 mb-8">
-              <div className="flex items-center text-core-gold gap-[2px]">
-                {/* Mock Stars */}
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className={`w-5 h-5 ${i < Math.floor(product.rating) ? "fill-current" : "fill-current opacity-20"}`} viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <span className="text-sm font-medium text-core-ink underline underline-offset-4 decoration-core-line hover:decoration-core-ink transition-colors cursor-pointer">{product.rating} ({product.reviewCount} Reviews)</span>
-            </div>
-
-            <div className="flex items-end gap-4 mb-10 pb-10 border-b border-core-line">
-              <span className="text-3xl text-core-ink font-medium">${product.price.toLocaleString()}</span>
-              {product.compareAtPrice && (
-                <span className="text-xl text-core-muted-foreground line-through mb-[2px]">
-                  ${product.compareAtPrice.toLocaleString()}
-                </span>
-              )}
-            </div>
-
+            {/* Long Description (Images) placed below gallery */}
             {product.htmlDescription ? (
               <div 
-                className="text-core-muted-foreground text-lg leading-relaxed mb-12 prose max-w-none [&>img]:w-full [&>img]:rounded-sm [&>img]:my-6 [&>p]:mb-4"
+                className="mt-16 text-core-muted-foreground text-lg leading-relaxed prose max-w-none [&>img]:w-full [&>img]:rounded-sm [&>img]:my-6 [&>p]:mb-4"
                 dangerouslySetInnerHTML={{ __html: product.htmlDescription }}
               />
             ) : (
-              <p className="text-core-muted-foreground text-lg leading-relaxed mb-12">
+              <p className="mt-16 text-core-muted-foreground text-lg leading-relaxed">
                 {product.description}
               </p>
             )}
+          </div>
 
-            <ProductForm product={product} />
+          {/* Right: Product Details & Form (Sticky) */}
+          <div className="w-full md:w-[45%]">
+            <div className="md:sticky md:top-32 md:py-10">
+              {/* Breadcrumb / Category */}
+              <div className="flex items-center gap-2 mb-6">
+                <p className="text-xs font-semibold uppercase tracking-widest text-core-muted-foreground hover:text-core-ink transition-colors cursor-pointer">
+                  {product.category}
+                </p>
+                <span className="text-core-muted-foreground/50 text-xs">/</span>
+                <p className="text-xs font-semibold uppercase tracking-widest text-core-ink">
+                  {product.name}
+                </p>
+              </div>
+              
+              <h1 className="font-heading text-5xl lg:text-6xl text-core-ink mb-6 tracking-tight leading-tight">{product.name}</h1>
+              
+              <div className="flex items-center gap-4 mb-8">
+                <div className="flex items-center text-core-gold gap-[2px]">
+                  {/* Mock Stars */}
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className={`w-5 h-5 ${i < Math.floor(product.rating) ? "fill-current" : "fill-current opacity-20"}`} viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-sm font-medium text-core-ink underline underline-offset-4 decoration-core-line hover:decoration-core-ink transition-colors cursor-pointer">{product.rating} ({product.reviewCount} Reviews)</span>
+              </div>
+
+              <div className="flex items-end gap-4 mb-10 pb-10 border-b border-core-line">
+                <span className="text-3xl text-core-ink font-medium">${product.price.toLocaleString()}</span>
+                {product.compareAtPrice && (
+                  <span className="text-xl text-core-muted-foreground line-through mb-[2px]">
+                    ${product.compareAtPrice.toLocaleString()}
+                  </span>
+                )}
+              </div>
+
+              <ProductForm product={product} />
 
             {/* Accordions */}
             <div className="mt-16 border-t border-core-line">
