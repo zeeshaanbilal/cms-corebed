@@ -29,8 +29,8 @@ export function ProductForm({ product }: { product: Product }) {
           <div className="flex justify-between items-center">
             <span className="font-heading text-lg tracking-wide text-core-ink uppercase text-sm">Select Size</span>
             <Sheet>
-              <SheetTrigger asChild>
-                <button className="text-xs font-semibold uppercase tracking-widest text-core-muted-foreground hover:text-core-ink transition-colors border-b border-core-line pb-[2px]">Size Guide</button>
+              <SheetTrigger render={<button className="text-xs font-semibold uppercase tracking-widest text-core-muted-foreground hover:text-core-ink transition-colors border-b border-core-line pb-[2px]" />}>
+                Size Guide
               </SheetTrigger>
               <SheetContent side="right" className="w-full sm:max-w-lg bg-white border-l border-[#F3F4F6] p-10 overflow-y-auto">
                 <SheetHeader className="mb-12 text-left">
