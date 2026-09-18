@@ -1,24 +1,32 @@
-import { getProductBySlug, products } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { ProductGallery } from "./ProductGallery";
 import { ProductForm } from "./ProductForm";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ProductCard } from "@/components/ProductCard";
+import { getProducts } from "@/lib/wordpress";
+
+export const revalidate = 0; // Always fetch live data
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const unwrappedParams = await params;
-  const product = getProductBySlug(unwrappedParams.slug);
+  
+  // Fetch ALL live products from WooCommerce
+  const allProducts = await getProducts();
+  
+  // Find the specific product by its slug
+  const product = allProducts.find(p => p.slug === unwrappedParams.slug);
 
   if (!product) {
     notFound();
   }
 
-  const relatedProducts = products
+  // Find related products from the live list
+  const relatedProducts = allProducts
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
     
   if (relatedProducts.length < 4) {
-    const extra = products.filter(p => p.id !== product.id && !relatedProducts.includes(p)).slice(0, 4 - relatedProducts.length);
+    const extra = allProducts.filter(p => p.id !== product.id && !relatedProducts.includes(p)).slice(0, 4 - relatedProducts.length);
     relatedProducts.push(...extra);
   }
 
