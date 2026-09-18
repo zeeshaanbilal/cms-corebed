@@ -114,14 +114,27 @@ export async function getProducts(): Promise<Product[]> {
         
       // Extract images
       let images: string[] = [];
-      if (wc.images && wc.images.length > 0) {
-        images = wc.images.map((img: any) => img.src);
-      } else if (wc.meta_data) {
-        // Check for dropshipping/Hostinger custom image meta
+      
+      // 1. Get Hostinger image if it exists
+      if (wc.meta_data) {
         const hostingerImage = wc.meta_data.find((m: any) => m.key === 'hostinger_preview_image_url');
         if (hostingerImage && hostingerImage.value) {
-          images = [hostingerImage.value];
+          images.push(hostingerImage.value);
         }
+      }
+      
+      // 2. Add WooCommerce standard/gallery images, ignoring the default placeholder
+      if (wc.images && wc.images.length > 0) {
+        const wcImgs = wc.images
+          .map((img: any) => img.src)
+          .filter((src: string) => !src.includes("woocommerce-placeholder"));
+          
+        // Add them to the array if they aren't already there (to avoid duplicates)
+        wcImgs.forEach((src: string) => {
+          if (!images.includes(src)) {
+            images.push(src);
+          }
+        });
       }
       
       // Fallback image if still empty
